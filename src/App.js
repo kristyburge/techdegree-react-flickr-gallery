@@ -23,7 +23,7 @@ class App extends Component {
     // this is asynchronous and returns a promise
     // .then() method only runs when the get request is completed.
     // pass a callback function to the .then() method which takes the response object
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&per_page=10&format=json&nojsoncallback=1`)
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&per_page=12&format=json&nojsoncallback=1`)
       .then(res => {
         // console.log(res.data.photos.photo);
         this.setState({
@@ -51,9 +51,9 @@ class App extends Component {
           <SearchForm searchTags={this.searchTags} /> 
           <Navbar /> 
           
-          <Route path='/cat' component={Cat} />
-          <Route path='/dog' component={Dog} />
-          <Route path='/goat' component={Goat} />
+          <Route path='/cat' render={ () => <Cat photos={this.state.photos} />} />
+          <Route path='/dog' render={ () => <Dog photos={this.state.photos} />} />
+          <Route path='/goat' render={ () => <Goat photos={this.state.photos} />} />
           
           <Gallery photos={this.state.photos} tag={this.state.tag} /> 
     

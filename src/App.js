@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import apiKey from './config.js';
 import axios from 'axios';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import SearchForm from './components/SearchForm';
 import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
+
+import Cat from './components/Cat';
+import Dog from './components/Dog';
+import Goat from './components/Goat';
 
 class App extends Component {
   
@@ -40,13 +45,20 @@ class App extends Component {
   
   render() {
     return (
-      <div className="container">
-
-        <SearchForm searchTags={this.searchTags} /> 
-        <Navbar /> 
-        <Gallery photos={this.state.photos} tag={this.state.tag} /> 
+      <BrowserRouter>
+        <div className="container">
   
-      </div>
+          <SearchForm searchTags={this.searchTags} /> 
+          <Navbar /> 
+          
+          <Route path='/cat' component={Cat} />
+          <Route path='/dog' component={Dog} />
+          <Route path='/goat' component={Goat} />
+          
+          <Gallery photos={this.state.photos} tag={this.state.tag} /> 
+    
+        </div>
+      </BrowserRouter>
     );
   }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Cat = ({ photos }) => {
-    console.log(photos);
+const Cat = ({ match }) => {
+    console.log(match);
     return(
         <div className="photo-container">
-            <h2>Cats</h2>
+            <h2>Cat</h2>
         </div>  
     );
     

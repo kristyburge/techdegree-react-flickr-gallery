@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import apiKey from './config.js';
 import axios from 'axios';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import SearchForm from './components/SearchForm';
 import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
-
-import Cat from './components/Cat';
-import Dog from './components/Dog';
-import Goat from './components/Goat';
+import NotFound from './components/NotFound';
 
 class App extends Component {
   
   state = {
     photos: [], 
-    tag: 'farm life'
+    tag: 'farm'
   }; 
   
   
@@ -33,14 +30,35 @@ class App extends Component {
   
   }
   
+  componentDidUpdate(prevProps, prevState) {
+  // check if previous props matches current props; if now, refetch the data and re-render the pictures
+  if (this.state.tag !== prevState.tag) {
+     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&per_page=12&format=json&nojsoncallback=1`)
+      .then(res => {
+        // set the state to the new photos array
+        this.setState({
+            photos: res.data.photos.photo,
+            tag: this.state.tag
+        });
+    });
+  }
+}
+  
   // create a function to accept the search term
   searchTags = (searchTermObj) => {
     this.setState({
       tag: searchTermObj.search
     });
 
-    // UPDATE AND MAKE A NEW CALL TO THE API ENDPOINT
-    
+  }
+  
+  // this function updates the tag when a user clicks the nav buttons
+  addTag = (button) => {
+ 
+    this.setState({
+      tag: button
+    });
+
   }
   
   render() {
@@ -49,13 +67,15 @@ class App extends Component {
         <div className="container">
   
           <SearchForm searchTags={this.searchTags} /> 
-          <Navbar /> 
-          
-          <Route path='/cat' render={ () => <Cat photos={this.state.photos} />} />
-          <Route path='/dog' render={ () => <Dog photos={this.state.photos} />} />
-          <Route path='/goat' render={ () => <Goat photos={this.state.photos} />} />
-          
-          <Gallery photos={this.state.photos} tag={this.state.tag} /> 
+          <Navbar addTag={this.addTag} />
+          { /* Add routes here  */ } 
+          <Switch>
+            <Route exact path="/" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
+            <Route path="/search/:topic" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
+            <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
+            <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} />} />
+            <Route component={NotFound} />
+          </Switch>
     
         </div>
       </BrowserRouter>

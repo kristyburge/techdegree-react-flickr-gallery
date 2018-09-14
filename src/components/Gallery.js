@@ -24,7 +24,7 @@ const Gallery = ({photos, tag}) => {
     
     return(
         <div className="photo-container">
-          <h2>Results</h2>
+          <h2>Results for {tag}</h2>
           <ul>
             {photoList}
           </ul>

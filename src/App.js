@@ -44,7 +44,7 @@ class App extends Component {
 
         <SearchForm searchTags={this.searchTags} /> 
         <Navbar /> 
-        <Gallery photos={this.state.photos} /> 
+        <Gallery photos={this.state.photos} tag={this.state.tag} /> 
   
       </div>
     );

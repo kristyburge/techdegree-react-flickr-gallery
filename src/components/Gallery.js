@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Gallery = ({ photos }) => {
-    console.log(photos);
+const Gallery = ({photos, tag}) => {
+
     // check to make sure there are photos
     const photoList = photos.length ? (
         // if true, map over the photoList array and return a list element
         photos.map( photo => {
             return (
                 <li key={photo.id}>
-                    <img src={'https://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg'} alt={photo.title} />
+                    <img src={'https://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg'} alt={photo.title + ' in ' + tag} />
                 </li>
             ); 
         })

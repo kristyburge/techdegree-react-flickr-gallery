@@ -17,7 +17,7 @@ class App extends Component {
     
     this.state = {
       photos: [], 
-      tag: 'farm',
+      tag: 'hiking',
       loading: true
     }; 
     
@@ -27,7 +27,7 @@ class App extends Component {
     // this is asynchronous and returns a promise
     // .then() method only runs when the get request is completed.
     // pass a callback function to the .then() method which takes the response object
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&per_page=12&format=json&nojsoncallback=1`)
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&safe_search=1&per_page=12&format=json&nojsoncallback=1`)
       .then(res => {
         // console.log(res.data.photos.photo);
         // update loading state
@@ -46,7 +46,7 @@ class App extends Component {
      
      this.setState({ loading: true }); 
      
-     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&per_page=12&format=json&nojsoncallback=1`)
+     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&safe_search=1&per_page=12&format=json&nojsoncallback=1`)
       .then(res => {
         // set the state to the new photos array
         this.setState({

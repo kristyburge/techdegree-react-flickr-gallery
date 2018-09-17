@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import Gallery from './components/Gallery';
 import NotFound from './components/NotFound';
 
+
+// This is the main Container component that handles keyword, api key, and fetches photos from the API
 class App extends Component {
   
   constructor(){
@@ -38,8 +40,12 @@ class App extends Component {
   }
   
   componentDidUpdate(prevProps, prevState) {
+
   // check if previous props matches current props; if now, refetch the data and re-render the pictures
   if (this.state.tag !== prevState.tag) {
+     
+     this.setState({ loading: true }); 
+     
      axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&media=photo&tags=${this.state.tag}&per_page=12&format=json&nojsoncallback=1`)
       .then(res => {
         // set the state to the new photos array
@@ -75,7 +81,7 @@ class App extends Component {
           <SearchForm searchTags={this.searchTags} /> 
           <Navbar addTag={this.addTag} />
           
-          { /* Test the loading state before rendering the Gallery component */}
+          { /* Test the loading state before rendering the Gallery component inside the Routes */}
           
           {   (this.state.loading) 
               ? (<p>Loading results...</p>)
@@ -83,8 +89,6 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
                   <Route path="/search/:topic" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
-                  <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
-                  <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
                   <Route component={NotFound} />
                 </Switch>
               )

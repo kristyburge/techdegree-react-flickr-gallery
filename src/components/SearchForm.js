@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 
 class SearchForm extends Component {
     
+    static propTypes = {
+        match:      PropTypes.object.isRequired,
+        location:   PropTypes.object.isRequired,
+        history:    PropTypes.object.isRequired
+    }; 
+    
     state = {
         search: ''
     };
-    
     
     //handle submit
     handleSubmit = (e) => {
@@ -15,6 +22,11 @@ class SearchForm extends Component {
    
         // pass the search term to App.js function searchTags
         this.props.searchTags(this.state);
+        
+        // update the url - first get the props from withRouter
+        // use destructuring to extract the value from the history property
+        const { history } = this.props;
+        history.push('/search/' + this.state.search);
         
         // clear the state and likewise, the input field
         this.setState({
@@ -31,7 +43,10 @@ class SearchForm extends Component {
     }
     
     render(){
+        
         return (
+
+
             <form className="search-form" onSubmit={this.handleSubmit}>
                 <input type="search" name="search" placeholder="Search" required onChange={this.handleChange} value={this.state.search} />
                 <button type="submit" className="search-button">
@@ -46,4 +61,4 @@ class SearchForm extends Component {
    
 }
 
-export default SearchForm;
+export default withRouter(SearchForm);

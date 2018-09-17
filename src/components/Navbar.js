@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 class Navbar extends Component {
     
-    
     handleClick = (e) => {
         e.preventDefault(); 
         const tag = e.target.innerText;

@@ -62,29 +62,33 @@ class App extends Component {
   
   // this function updates the tag when a user clicks the nav buttons
   addTag = (button) => {
- 
     this.setState({
       tag: button
     });
-
   }
   
   render() {
     return (
       <BrowserRouter>
         <div className="container">
-  
+          
           <SearchForm searchTags={this.searchTags} /> 
           <Navbar addTag={this.addTag} />
-          { /* Add routes here  */ } 
-          <Switch>
-            <Route exact path="/" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
-            <Route path="/search/:topic" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
-            <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
-            <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
-            <Route component={NotFound} />
-          </Switch>
-    
+          
+          { /* Test the loading state before rendering the Gallery component */}
+          
+          {   (this.state.loading) 
+              ? (<p>Loading results...</p>)
+              : (
+                <Switch>
+                  <Route exact path="/" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+                  <Route path="/search/:topic" render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+                  <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+                  <Route path='/search/:topic' render={ () => <Gallery photos={this.state.photos} tag={this.state.tag} loading={this.state.loading} />} />
+                  <Route component={NotFound} />
+                </Switch>
+              )
+          }
         </div>
       </BrowserRouter>
     );

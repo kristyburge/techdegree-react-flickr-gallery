@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "React Flickr Gallery",
+  "name": "React App Searchable Flickr Gallery",
   "icons": [
     {
       "src": "favicon.ico",
